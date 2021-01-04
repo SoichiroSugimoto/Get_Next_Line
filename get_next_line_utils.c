@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 17:58:15 by sosugimo          #+#    #+#             */
-/*   Updated: 2020/11/13 01:08:12 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/05 00:42:48 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@ size_t	ft_strlen(const char *s)
 	int		i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i])
+		i++;
+	return (i);
+}
+
+size_t	ft_linelen(const char *s)
+{
+	int		i;
+
+	i = 0;
+	while (s[i] && s[i] != '\n')
 		i++;
 	return (i);
 }
@@ -28,19 +38,17 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	if (!s1 || !s2)
-		return (0);
 	if (!(p = (char *)malloc(sizeof(char) *
 		(ft_strlen(s1) + ft_strlen(s2) + 1))))
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (s1[i] != '\0')
+	while (s1[i])
 	{
 		p[i] = s1[i];
 		i++;
 	}
-	while (s2[j] != '\0')
+	while (s2[j])
 	{
 		p[i + j] = s2[j];
 		j++;
@@ -72,6 +80,8 @@ int		find_newline(char *st)
 	int i;
 
 	i = 0;
+	if (!st)
+		return (-1);
 	while (st[i])
 	{
 		if (st[i] == '\n')
@@ -80,3 +90,4 @@ int		find_newline(char *st)
 	}
 	return (-1);
 }
+
