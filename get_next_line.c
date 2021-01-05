@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/05 01:50:40 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/05 17:48:56 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		get_next_line(int fd, char **line)
 	ssize_t		size;
 	char		*tmp;
 
+	if (!line)
+		return (-1);
 	size = 1;
 	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
@@ -40,13 +42,27 @@ int		get_next_line(int fd, char **line)
 		if ((size = read(fd, buf, BUFFER_SIZE)) == -1)
 			return (all_free(&buf, &save));
 		buf[size] = '\0';
-		save = ft_strjoin(save, buf);
+		tmp = save;
+		if (!(save = ft_strjoin(save, buf)))
+			return (all_free(&buf, &save));
+		free (tmp);
 	}
 	safe_free(&buf);
 	if (!(*line = (char *)malloc(sizeof(char) * ft_linelen(save) + 1)))
 		return (all_free(&buf, &save));
-	ft_strlcpy(*line, save, ft_linelen(save) + 1);
-	tmp = save;
-	save = save + ft_linelen(save) + 1;
+	if (*save)
+	{
+		ft_strlcpy(*line, save, ft_linelen(save));
+		tmp = save;
+		if (!(save = ft_strjoin(save + ft_strlen(save) + 1, "")))
+			return (all_free(&buf, &save));
+		free (tmp);
+		if (!*save)
+		{
+			free (save);
+			save = NULL;
+		}
+	}
 	return (size == 0 ? 0 : 1);
 }
+
