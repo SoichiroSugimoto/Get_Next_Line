@@ -6,11 +6,12 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/05 17:48:56 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:42:04 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 void	safe_free(char **st)
 {
@@ -54,7 +55,7 @@ int		get_next_line(int fd, char **line)
 	{
 		ft_strlcpy(*line, save, ft_linelen(save));
 		tmp = save;
-		if (!(save = ft_strjoin(save + ft_strlen(save) + 1, "")))
+		if (!(save = ft_strjoin(save + ft_linelen(save) + 1, "")))
 			return (all_free(&buf, &save));
 		free (tmp);
 		if (!*save)
@@ -65,4 +66,3 @@ int		get_next_line(int fd, char **line)
 	}
 	return (size == 0 ? 0 : 1);
 }
-
