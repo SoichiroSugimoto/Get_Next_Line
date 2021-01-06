@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/06 19:33:33 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/06 19:39:53 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*free_save(char *save, char *buf)
 	return (save);
 }
 
-char	*str_n_join(char **save, char **buf)
+char	*str_n_join(char *save, char *buf)
 {
 	char *tmp;
 
@@ -70,7 +70,7 @@ int		get_next_line(int fd, char **line)
 		if ((size = read(fd, buf, BUFFER_SIZE)) == -1)
 			return (all_free(&buf, &save));
 		buf[size] = '\0';
-		if ((save = str_n_join(&save, &buf)) == NULL)
+		if ((save = str_n_join(save, buf)) == NULL)
 			return (-1);
 	}
 	safe_free(&buf);
