@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 17:58:15 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/05 22:26:49 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/09 04:17:23 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*ft_strjoin(char *s1, char *s2)
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	//printf("L-HipHop\n");
 	size_t i;
 
 	i = 0;
@@ -70,15 +69,13 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		return (0);
 	if (!dstsize)
 		return (ft_strlen(src));
-	//printf("%s", src);
 	while ((i != dstsize) && src[i])
 	{
-		//printf("dekiteru\n");
 		dst[i] = src[i];
 		i++;
 	}
 	dst[i] = '\0';
-	//printf("%s\n", dst);
+	//printf("\n\n[dst] ---> %s\n\n", dst);
 	return (ft_strlen(src));
 }
 

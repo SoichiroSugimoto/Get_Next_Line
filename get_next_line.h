@@ -6,12 +6,15 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:27:35 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/05 01:51:29 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/09 04:15:05 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# define ERROR -1
+# define SUCCESS 1
 
 # include <string.h>
 # include <stdlib.h>

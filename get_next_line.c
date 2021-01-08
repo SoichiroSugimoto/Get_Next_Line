@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/06 19:39:53 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/09 04:17:06 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ int		all_free(char **buf, char **save)
 	return (-1);
 }
 
-char	*free_save(char *save, char *buf)
+int		free_save(char **save, char **buf)
 {
 	char *tmp;
 
-	tmp = save;
-	if (!(save = ft_strjoin(save + ft_linelen(save) + 1, "")))
+	tmp = *save;
+	if (!(*save = ft_strjoin(*save + ft_linelen(*save) + 1, "")))
 	{
-		all_free(&buf, &save);
-		return (NULL);
+		all_free(buf, save);
+		return (ERROR);
 	}
 	free(tmp);
-	if (!*save)
-		safe_free(&save);
-	return (save);
+	if (!**save)
+		safe_free(save);
+	return (SUCCESS);
 }
 
 char	*str_n_join(char *save, char *buf)
@@ -79,8 +79,10 @@ int		get_next_line(int fd, char **line)
 	if (*save)
 	{
 		ft_strlcpy(*line, save, ft_linelen(save));
-		if ((save = free_save(save, buf)) == NULL)
+		//printf("line ------> %s\n", *line);
+		if (free_save(&save, &buf) == ERROR)
 			return (-1);
+		save = NULL;
 	}
 	return (size == 0 ? 0 : 1);
 }
