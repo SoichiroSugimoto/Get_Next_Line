@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/09 05:04:52 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/10 00:54:31 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,34 @@ int		all_free(char **buf, char **save)
 	return (-1);
 }
 
-int		free_save(char **save, char **buf)
+char	*free_save(char *save, char *buf)
 {
 	char *tmp;
 
-	tmp = *save;
-	if (!(*save = ft_strjoin(*save + ft_linelen(*save) + 1, "")))
+	tmp = save;
+	if (!(save = ft_strjoin(save + ft_linelen(save) + 1, "")))
 	{
-		all_free(buf, save);
-		return (ERROR);
+		all_free(&buf, &save);
+		return (NULL);
 	}
 	free(tmp);
-	if (!**save)
-		safe_free(save);
-	return (SUCCESS);
+	if (!*save)
+		safe_free(&save);
+	return (save);
+}
+
+char	*str_n_join(char **save, char **buf)
+{
+	char *tmp;
+
+	tmp = save;
+	if (!(save = ft_strjoin(save, buf)))
+	{
+		all_free(&buf, &save);
+		return (NULL);
+	}
+	free(tmp);
+	return (save);
 }
 
 int		get_next_line(int fd, char **line)
@@ -47,22 +61,17 @@ int		get_next_line(int fd, char **line)
 	static char *save;
 	char		*buf;
 	ssize_t		size;
-	char 		*tmp;
 
-	if (!line)
-		return (-1);
 	size = 1;
-	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)))
+	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)) || !line)
 		return (-1);
 	while ((find_newline(save) == -1) && (size > 0))
 	{
 		if ((size = read(fd, buf, BUFFER_SIZE)) == -1)
 			return (all_free(&buf, &save));
 		buf[size] = '\0';
-		tmp = save;
-		if (!(save = ft_strjoin(save, buf)))
-			return (all_free(&buf, &save));
-		free(tmp);
+		if ((save = str_n_join(&save, &buf)) == NULL)
+			return (-1);
 	}
 	safe_free(&buf);
 	if (!(*line = (char *)malloc(sizeof(char) * ft_linelen(save) + 1)))
@@ -70,15 +79,8 @@ int		get_next_line(int fd, char **line)
 	if (*save)
 	{
 		ft_strlcpy(*line, save, ft_linelen(save));
-		tmp = save;
-		if (!(save = ft_strjoin(save + ft_linelen(save) + 1, "")))
-			return (all_free(&buf, &save));
-		free(tmp);
-		if (!*save)
-		{
-			free(save);
-			save = NULL;
-		}
+		if ((save = free_save(save, buf)) == NULL)
+			return (-1);
 	}
 	return (size == 0 ? 0 : 1);
 }

@@ -19,7 +19,7 @@ int main()
         free(line);
     }
     close(fd);
-    //system("leaks a.out");
+    system("leaks a.out");
 }
 
 
