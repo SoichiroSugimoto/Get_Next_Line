@@ -6,12 +6,11 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/10 00:54:31 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/22 23:33:30 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 void	safe_free(char **st)
 {
@@ -26,34 +25,34 @@ int		all_free(char **buf, char **save)
 	return (-1);
 }
 
-char	*free_save(char *save, char *buf)
+int		free_save(char **save, char *buf)
 {
 	char *tmp;
 
-	tmp = save;
-	if (!(save = ft_strjoin(save + ft_linelen(save) + 1, "")))
+	tmp = *save;
+	if (!(*save = ft_strjoin(*save + ft_linelen(*save) + 1, "")))
 	{
-		all_free(&buf, &save);
-		return (NULL);
+		all_free(&buf, save);
+		return (ERROR);
 	}
 	free(tmp);
-	if (!*save)
-		safe_free(&save);
-	return (save);
+	if (!**save)
+		safe_free(save);
+	return (SUCCESS);
 }
 
 char	*str_n_join(char **save, char **buf)
 {
 	char *tmp;
 
-	tmp = save;
-	if (!(save = ft_strjoin(save, buf)))
+	tmp = *save;
+	if (!(*save = ft_strjoin(*save, *buf)))
 	{
-		all_free(&buf, &save);
+		all_free(buf, save);
 		return (NULL);
 	}
 	free(tmp);
-	return (save);
+	return (*save);
 }
 
 int		get_next_line(int fd, char **line)
@@ -79,7 +78,7 @@ int		get_next_line(int fd, char **line)
 	if (*save)
 	{
 		ft_strlcpy(*line, save, ft_linelen(save));
-		if ((save = free_save(save, buf)) == NULL)
+		if ((free_save(&save, buf)) == ERROR)
 			return (-1);
 	}
 	return (size == 0 ? 0 : 1);

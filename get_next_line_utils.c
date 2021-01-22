@@ -6,12 +6,11 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 17:58:15 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/09 04:35:04 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/01/22 23:34:13 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h> //コメント
 
 size_t	ft_strlen(const char *s)
 {
