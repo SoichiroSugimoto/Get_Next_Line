@@ -6,16 +6,17 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/22 23:33:30 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/02/19 00:38:16 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	safe_free(char **st)
+int		safe_free(char **st)
 {
 	free(*st);
 	*st = NULL;
+	return (0);
 }
 
 int		all_free(char **buf, char **save)
@@ -30,7 +31,8 @@ int		free_save(char **save, char *buf)
 	char *tmp;
 
 	tmp = *save;
-	if (!(*save = ft_strjoin(*save + ft_linelen(*save) + 1, "")))
+	if (!(*save = ft_strjoin(*save + ft_linelen(*save) +
+	(find_newline(*save) == -1 ? 0 : 1), "")))
 	{
 		all_free(&buf, save);
 		return (ERROR);
@@ -81,5 +83,5 @@ int		get_next_line(int fd, char **line)
 		if ((free_save(&save, buf)) == ERROR)
 			return (-1);
 	}
-	return (size == 0 ? 0 : 1);
+	return (size == 0 ? safe_free(&save) : 1);
 }

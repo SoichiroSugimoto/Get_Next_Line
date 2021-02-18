@@ -6,12 +6,12 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:27:35 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/22 23:33:44 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/02/19 00:39:45 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # define ERROR -1
 # define SUCCESS 1

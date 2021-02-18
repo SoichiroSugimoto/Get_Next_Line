@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 17:58:15 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/01/23 00:16:42 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/02/19 00:41:18 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,12 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	size_t i;
 
 	i = 0;
-	if (!src || !dst)
-		return (0);
-	if (!dstsize)
-		return (ft_strlen(src));
 	while ((i != dstsize) && src[i])
 	{
 		dst[i] = src[i];
 		i++;
 	}
 	dst[i] = '\0';
-	//printf("\n\n[dst] ---> %s\n\n", dst);
 	return (ft_strlen(src));
 }
 
