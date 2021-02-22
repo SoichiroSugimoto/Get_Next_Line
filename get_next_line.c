@@ -6,7 +6,7 @@
 /*   By: sosugimo <sosugimo@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 03:26:08 by sosugimo          #+#    #+#             */
-/*   Updated: 2021/02/19 00:38:16 by sosugimo         ###   ########.fr       */
+/*   Updated: 2021/02/22 02:50:38 by sosugimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ int		get_next_line(int fd, char **line)
 	ssize_t		size;
 
 	size = 1;
-	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)) || !line)
+	if (!line || BUFFER_SIZE <= 0 || fd < 0)
+		return (ERROR);
+	if (!line || !(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
 	while ((find_newline(save) == -1) && (size > 0))
 	{
